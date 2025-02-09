@@ -1,29 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Categories',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
         ),
-        backgroundColor: Colors.grey,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Container(
-          height: 500,
-          width: 1500,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
+        child: Expanded(
           child: DataTable(
             columns: const [
               DataColumn(label: Text('Name')),
@@ -33,22 +22,22 @@ class CategoriesScreen extends StatelessWidget {
             ],
             rows: [
               DataRow(cells: [
-                DataCell(
+                const DataCell(
                   Text(
                     'Modern',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                DataCell(
+                const DataCell(
                   Text(
                     'Contemporary architectural design',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                DataCell(
+                const DataCell(
                   Text(
                     '2024-03-10',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 DataCell(Row(
@@ -72,22 +61,22 @@ class CategoriesScreen extends StatelessWidget {
               ]),
               DataRow(
                 cells: [
-                  DataCell(
+                  const DataCell(
                     Text(
                       'Traditional',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  DataCell(
+                  const DataCell(
                     Text(
                       'Classic architectural styles',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  DataCell(
+                  const DataCell(
                     Text(
                       '2024-03-16',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   DataCell(
