@@ -1,6 +1,5 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:dream_home_admin/common_widget/custom_search.dart';
-import 'package:dream_home_admin/theme/app_theme.dart';
+import 'package:dream_home_admin/features/architect_screen/architect_view_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ArchitectScreen extends StatelessWidget {
@@ -60,67 +59,66 @@ class ArchitectScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: DataTable2(
-                  headingRowColor: WidgetStateProperty.resolveWith<Color?>(
-                    (Set<WidgetState> states) {
-                      return secondaryColor; // Default row color (light grey)
-                    },
-                  ),
-                  dataRowColor: WidgetStateProperty.resolveWith<Color?>(
-                    (Set<WidgetState> states) {
-                      return secondaryColor; // Default row color (light grey)
-                    },
-                  ),
+                child: DataTable(
+                  // headingRowColor: WidgetStateProperty.resolveWith<Color?>(
+                  //   (Set<WidgetState> states) {
+                  //     return secondaryColor; // Default row color (light grey)
+                  //   },
+                  // ),
+                  // dataRowColor: WidgetStateProperty.resolveWith<Color?>(
+                  //   (Set<WidgetState> states) {
+                  //     return secondaryColor; // Default row color (light grey)
+                  //   },
+                  // ),
                   columns: const [
-                    DataColumn2(label: Text('Name')),
-                    DataColumn2(label: Text('Phone')),
-                    DataColumn2(label: Text('Plans')),
-                    DataColumn2(
-                      label: Text('Status'),
+                    DataColumn(label: Text('Name')),
+                    DataColumn(label: Text('Email')),
+                    DataColumn(label: Text('Phone')),
+                    DataColumn(label: Text('Plans')),
+                    DataColumn(
+                      label: Text(
+                        'Actions',
+                      ),
                     ),
-                    DataColumn2(
-                        label: Text(
-                          'Actions',
-                        ),
-                        numeric: true),
                   ],
-                  rows: const [
-                    DataRow2(
+                  rows: [
+                    DataRow(
                       cells: [
-                        DataCell(Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'John',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text('john@123.com'),
-                          ],
+                        const DataCell(Text(
+                          'John',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        DataCell(Text('1234567890')),
-                        DataCell(Text('Mordern residential')),
-                        DataCell(Text('approved')),
-                        DataCell(Text('View Details')),
+                        const DataCell(
+                          Text('john@123.com'),
+                        ),
+                        const DataCell(Text('1234567890')),
+                        const DataCell(Text('Mordern residential')),
+                        DataCell(TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ArchitectViewDetailScreen(),
+                                  ));
+                            },
+                            child: const Text('View Details'))),
                       ],
                     ),
-                    DataRow2(
+                    DataRow(
                       cells: [
-                        DataCell(Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Jane',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text('jane@123.com'),
-                          ],
+                        const DataCell(Text(
+                          'Jane',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        DataCell(Text('9876543210')),
-                        DataCell(Text('Sustainable residential')),
-                        DataCell(Text('pending')),
-                        DataCell(Text('View Details')),
+                        const DataCell(
+                          Text('jane@123.com'),
+                        ),
+                        const DataCell(Text('9876543210')),
+                        const DataCell(Text('Sustainable residential')),
+                        DataCell(TextButton(
+                            onPressed: () {},
+                            child: const Text('View Details'))),
                       ],
                     ),
                   ],

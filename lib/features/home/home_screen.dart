@@ -6,6 +6,7 @@ import 'package:dream_home_admin/features/home/custom_drawer_item.dart';
 import 'package:dream_home_admin/features/home_plan_screen/homeplans_screen.dart';
 import 'package:dream_home_admin/features/login_screen/login_screen.dart';
 import 'package:dream_home_admin/features/order_screen/order_screen.dart';
+import 'package:dream_home_admin/features/pending_request/pending_request.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: const Color(0xff5b5859),
       body: Row(
         children: [
           Padding(
@@ -122,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Colors.black
                             : Colors.white,
                         isSelected: tabController.index == 2,
-                        title: 'Category Screen',
-                        icon: Icons.category,
+                        title: 'Pending Request',
+                        icon: Icons.lock_clock_outlined,
                         ontap: () {
                           tabController.animateTo(2);
                         },
@@ -142,8 +143,8 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Colors.black
                             : Colors.white,
                         isSelected: tabController.index == 3,
-                        title: 'Homeplane',
-                        icon: Icons.foundation,
+                        title: 'Category Screen',
+                        icon: Icons.category,
                         ontap: () {
                           tabController.animateTo(3);
                         },
@@ -162,10 +163,30 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Colors.black
                             : Colors.white,
                         isSelected: tabController.index == 4,
+                        title: 'Homeplane',
+                        icon: Icons.foundation,
+                        ontap: () {
+                          tabController.animateTo(4);
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomDrawerItem(
+                        iconColor: tabController.index == 5
+                            ? Colors.white
+                            : Colors.black,
+                        textColor: tabController.index == 5
+                            ? Colors.white
+                            : Colors.black,
+                        color: tabController.index == 5
+                            ? Colors.black
+                            : Colors.white,
+                        isSelected: tabController.index == 5,
                         title: 'Order Screen',
                         icon: Icons.border_all,
                         ontap: () {
-                          tabController.animateTo(4);
+                          tabController.animateTo(5);
                         },
                       ),
                       const SizedBox(
@@ -175,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen>
                         iconColor: Colors.redAccent,
                         textColor: Colors.red,
                         color: Colors.white,
-                        isSelected: tabController.index == 5,
+                        isSelected: tabController.index == 6,
                         title: 'LogOut',
                         icon: Icons.logout,
                         ontap: () {
@@ -212,6 +233,7 @@ class _HomeScreenState extends State<HomeScreen>
               children: const [
                 Dashboard(),
                 ArchitectScreen(),
+                PendingRequest(),
                 CategoriesScreen(),
                 HomeplansScreen(),
                 OrderScreen(),
