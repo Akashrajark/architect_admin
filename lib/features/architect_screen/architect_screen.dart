@@ -12,7 +12,7 @@ class ArchitectScreen extends StatelessWidget {
       child: Column(
         children: [
           Material(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -21,7 +21,7 @@ class ArchitectScreen extends StatelessWidget {
                   const Expanded(
                     child: Text('Architect',
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(
                     width: 10,
@@ -44,11 +44,11 @@ class ArchitectScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.white, // Background color
-                  borderRadius: BorderRadius.circular(20), // Curved border
+                  borderRadius: BorderRadius.circular(10), // Curved border
                   border: Border.all(
                       color: Colors.grey.shade300, width: 1), // Border color
                   boxShadow: const [
@@ -74,7 +74,7 @@ class ArchitectScreen extends StatelessWidget {
                     DataColumn(label: Text('Name')),
                     DataColumn(label: Text('Email')),
                     DataColumn(label: Text('Phone')),
-                    DataColumn(label: Text('Plans')),
+                    DataColumn(label: Text('License no')),
                     DataColumn(
                       label: Text(
                         'Actions',
@@ -92,7 +92,7 @@ class ArchitectScreen extends StatelessWidget {
                           Text('john@123.com'),
                         ),
                         const DataCell(Text('1234567890')),
-                        const DataCell(Text('Mordern residential')),
+                        const DataCell(Text('61373-KL')),
                         DataCell(TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -115,7 +115,7 @@ class ArchitectScreen extends StatelessWidget {
                           Text('jane@123.com'),
                         ),
                         const DataCell(Text('9876543210')),
-                        const DataCell(Text('Sustainable residential')),
+                        const DataCell(Text('61373-KO')),
                         DataCell(TextButton(
                             onPressed: () {},
                             child: const Text('View Details'))),

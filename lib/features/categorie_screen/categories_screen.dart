@@ -23,7 +23,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: Column(
         children: [
           Material(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -120,11 +120,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.white, // Background color
-                  borderRadius: BorderRadius.circular(20), // Curved border
+                  borderRadius: BorderRadius.circular(10), // Curved border
                   border: Border.all(
                       color: Colors.grey.shade300, width: 1), // Border color
                   boxShadow: const [

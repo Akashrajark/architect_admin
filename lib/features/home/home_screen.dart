@@ -33,11 +33,11 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff5b5859),
+      backgroundColor: Colors.black54,
       body: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -49,28 +49,19 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Column(
                     children: [
                       const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.amber,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
                           Text(
                             'Dream Home',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900),
                           )
                         ],
                       ),
                       const SizedBox(
-                        height: 25,
-                      ),
-                      const Divider(
-                        thickness: 2,
-                      ),
-                      const SizedBox(
-                        height: 35,
+                        height: 60,
                       ),
                       CustomDrawerItem(
                         title: 'Dashboard',
@@ -90,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
                             : Colors.black,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: tabController.index == 1
@@ -110,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: tabController.index == 2
@@ -130,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: tabController.index == 3
@@ -150,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: tabController.index == 4
@@ -163,14 +154,14 @@ class _HomeScreenState extends State<HomeScreen>
                             ? Colors.black
                             : Colors.white,
                         isSelected: tabController.index == 4,
-                        title: 'Homeplane',
+                        title: 'Homeplans',
                         icon: Icons.foundation,
                         ontap: () {
                           tabController.animateTo(4);
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: tabController.index == 5
@@ -190,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       CustomDrawerItem(
                         iconColor: Colors.redAccent,
