@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dream_home_admin/features/home_plan_screen/feature_card.dart';
 
 class HomePlanDetailScreen extends StatefulWidget {
-  final List<String> imageUrls;
+  final String imageUrl;
   final String title;
   final String category;
   final double price;
@@ -11,7 +11,7 @@ class HomePlanDetailScreen extends StatefulWidget {
 
   const HomePlanDetailScreen({
     super.key,
-    required this.imageUrls,
+    required this.imageUrl,
     required this.title,
     required this.category,
     required this.price,
@@ -24,115 +24,79 @@ class HomePlanDetailScreen extends StatefulWidget {
 }
 
 class _HomePlanDetailScreenState extends State<HomePlanDetailScreen> {
-  int _currentIndex = 0;
-
-  void _nextImage() {
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % widget.imageUrls.length;
-    });
-  }
-
-  void _previousImage() {
-    setState(() {
-      _currentIndex = (_currentIndex - 1) >= 0
-          ? _currentIndex - 1
-          : widget.imageUrls.length - 1;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // centerTitle: false,
-        // title: Text(
-        //   widget.title,
-        //   style: TextStyle(fontSize: 20, color: Colors.black),
-        // ),
         backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Expanded(
-              flex: 2,
-              child: Stack(
-                children: [
-                  Image.network(
-                    widget.imageUrls[_currentIndex],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image Section
+                Expanded(
+                  flex: 2,
+                  child: Image.network(
+                    widget.imageUrl,
                     fit: BoxFit.cover,
                   ),
-                  Positioned(
-                      left: 10,
-                      top: 0,
-                      bottom: 0,
-                      child: GestureDetector(
-                          onTap: () {
-                            _previousImage();
-                          },
-                          child: Material(
-                            color: Colors.transparent,
-                            child:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
-                          ))),
-                  Positioned(
-                      right: 10,
-                      top: 0,
-                      bottom: 0,
-                      child: GestureDetector(
-                          onTap: () {
-                            _nextImage();
-                          },
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Icon(Icons.arrow_forward_ios,
-                                color: Colors.white),
-                          ))),
-                ],
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.title,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text("Category: ${widget.category}",
-                      style: TextStyle(fontSize: 18)),
-                  Text("Price: \\${widget.price}",
-                      style: TextStyle(fontSize: 18, color: Colors.green)),
-                  const SizedBox(height: 10),
-                  Row(
+                ),
+                const SizedBox(width: 20),
+                // Details Section
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(widget.architectImage),
-                        radius: 30,
+                      Text(
+                        widget.title,
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(width: 10),
-                      Text(widget.architectName,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Text("Features",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                      SizedBox(height: 10),
+                      Text(
+                        "Category: ${widget.category}",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        "Price: \\${widget.price}",
+                        style: TextStyle(fontSize: 18, color: Colors.green),
+                      ),
+                      const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(widget.architectImage),
+                            radius: 30,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            widget.architectName,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Features",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           FeatureCard(
                             text: "4 Beds",
@@ -147,22 +111,69 @@ class _HomePlanDetailScreenState extends State<HomePlanDetailScreen> {
                             text: "1 Parking",
                           ),
                         ],
-                      )
+                      ),
+                      Text(
+                        "Description",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.normal),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 30),
-                  Text(
-                    "Details for Image ",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "This is the detail text for the current image. You can customize this text based on the image index.",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+            const SizedBox(height: 30),
+
+            // Ground Floor and Rooms Information
+            Text(
+              "Ground Floor & Rooms",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "• Living Room",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "• Dining Room",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "• Kitchen",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "• 2 Bedrooms",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "• 1 Bathroom",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            Text(
+              "Detailed Image",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: Image.network(
+                'https://gillaniarchitects.weebly.com/uploads/1/2/7/4/12747279/8845232_orig.jpg',
+                fit: BoxFit.cover,
+              ),
+            )
           ],
         ),
       ),

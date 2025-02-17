@@ -38,12 +38,8 @@ class HomeplansScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => HomePlanDetailScreen(
-                                imageUrls: [
-                                  'https://g.foolcdn.com/editorial/images/574911/new-home.jpg',
-                                  'https://cdn.pixabay.com/photo/2023/05/27/08/04/ai-generated-8021008_1280.jpg',
-                                  'https://g.foolcdn.com/editorial/images/574911/new-home.jpg',
-                                  'https://cdn.pixabay.com/photo/2023/05/27/08/04/ai-generated-8021008_1280.jpg'
-                                ],
+                                imageUrl:
+                                    'https://g.foolcdn.com/editorial/images/574911/new-home.jpg',
                                 title: 'Sunset Detail View',
                                 category: 'Modern Villa',
                                 price: 9000,
