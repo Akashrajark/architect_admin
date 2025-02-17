@@ -1,3 +1,4 @@
+import 'package:dream_home_admin/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawerItem extends StatelessWidget {
@@ -5,37 +6,40 @@ class CustomDrawerItem extends StatelessWidget {
   final IconData icon;
   final Function() ontap;
   final bool isSelected;
-  final Color color;
-  final Color iconColor;
-  final Color textColor;
-  const CustomDrawerItem(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.ontap,
-      this.isSelected = false,
-      required this.color,
-      required this.iconColor,
-      required this.textColor});
+
+  const CustomDrawerItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.ontap,
+    this.isSelected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Material(
-        color: color,
-        borderRadius: BorderRadius.circular(50),
+    return Material(
+      color: isSelected ? primaryColor : secondaryColor,
+      borderRadius: BorderRadius.circular(32),
+      child: InkWell(
+        onTap: ontap,
+        borderRadius: BorderRadius.circular(32),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Row(
             children: [
-              Icon(icon, color: iconColor),
+              Icon(
+                icon,
+                size: 18,
+                color: isSelected ? secondaryColor : iconColor,
+              ),
               const SizedBox(
-                width: 10,
+                width: 15,
               ),
               Text(
                 title,
-                style: TextStyle(color: textColor),
+                style: TextStyle(
+                  color: isSelected ? secondaryColor : iconColor,
+                ),
               ),
             ],
           ),
