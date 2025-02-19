@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomDropDownMenu<T> extends StatelessWidget {
   final TextEditingController? controller;
+  final bool isLoading;
   final T? initialSelection;
   final Function(T? selected) onSelected;
   final String hintText;
@@ -15,15 +16,17 @@ class CustomDropDownMenu<T> extends StatelessWidget {
     required this.onSelected,
     this.controller,
     this.initialSelection,
+    required this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      enabled: !isLoading,
       initialSelection: initialSelection,
       onSelected: onSelected,
       controller: controller,
-      width: double.infinity,
+      width: width,
       hintText: hintText,
       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w500,
