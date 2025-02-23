@@ -6,7 +6,6 @@ import 'package:dream_home_admin/features/home/custom_drawer_item.dart';
 import 'package:dream_home_admin/features/home_plan_screen/homeplans_screen.dart';
 import 'package:dream_home_admin/features/login_screen/login_screen.dart';
 import 'package:dream_home_admin/features/order_screen/order_screen.dart';
-import 'package:dream_home_admin/features/pending_request/pending_request.dart';
 import 'package:dream_home_admin/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -169,7 +168,9 @@ class _HomeScreenState extends State<HomeScreen>
               children: const [
                 Dashboard(),
                 ArchitectScreen(),
-                PendingRequest(),
+                ArchitectScreen(
+                  isPending: true,
+                ),
                 CategoriesScreen(),
                 HomeplansScreen(),
                 OrderScreen(),

@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
 
 import '../../util/check_login.dart';
-import 'bloc/categories_bloc.dart';
+import 'categories_bloc/categories_bloc.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});

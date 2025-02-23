@@ -99,37 +99,37 @@ ThemeData appTheme = ThemeData(
     prefixIconColor: iconColor,
     floatingLabelBehavior: FloatingLabelBehavior.auto,
     contentPadding: const EdgeInsets.symmetric(
-      vertical: 5,
-      horizontal: 8,
+      horizontal: 18,
+      vertical: 15,
     ),
     fillColor: cardBackgroundColor,
     filled: true,
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(32),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(32),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(32),
       borderSide: const BorderSide(
         color: cardFocusBorderColor,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide(
         color: Colors.red[700]!,
       ),
     ),
     disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(32),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),

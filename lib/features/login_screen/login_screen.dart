@@ -1,5 +1,9 @@
+import 'package:dream_home_admin/common_widget/custom_button.dart';
+import 'package:dream_home_admin/common_widget/custom_text_formfield.dart';
 import 'package:dream_home_admin/features/home/home_screen.dart';
 import 'package:dream_home_admin/features/login_screen/login_bloc/login_bloc.dart';
+import 'package:dream_home_admin/theme/app_theme.dart';
+import 'package:dream_home_admin/util/value_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -64,89 +68,68 @@ class _LoginScreenState extends State<LoginScreen> {
           },
           builder: (context, state) {
             return Center(
-              child: Container(
-                margin: const EdgeInsets.all(10.0),
-                width: 350.0,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      stops: [
-                        0.0,
-                        0.6,
-                      ],
-                      end: Alignment.bottomCenter,
-                      colors: [Color.fromARGB(187, 238, 111, 27), Colors.white],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade500,
-                        blurRadius: 2.0,
-                        offset: const Offset(2.0, 2.0),
-                      ),
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Form(
-                    key: _formkey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                            child: FloatingActionButton.small(
-                          onPressed: () {},
-                          backgroundColor: Colors.white,
-                          foregroundColor:
-                              const Color.fromARGB(187, 238, 111, 27),
-                          child: const Icon(Icons.house_rounded),
-                        )),
-                        const SizedBox(height: 20),
-                        const Center(
-                            child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          'Dream Home',
-                          style: TextStyle(fontSize: 20),
-                        )),
-                        const SizedBox(height: 80),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+              child: SizedBox(
+                width: 360,
+                child: Material(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 3, color: outlineColor),
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Form(
+                      key: _formkey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                              child: FloatingActionButton.small(
+                            onPressed: null,
+                            backgroundColor: Colors.white,
+                            foregroundColor:
+                                const Color.fromARGB(187, 238, 111, 27),
+                            child: const Icon(Icons.house_rounded),
+                          )),
+                          const SizedBox(height: 20),
+                          const Center(
+                              child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            'Dream Home',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                          const SizedBox(height: 30),
+                          CustomTextFormField(
+                            isLoading: state is LoginLoadingState,
+                            controller: _emailController,
                             labelText: 'Email',
-                            prefixIcon: Icon(Icons.email),
+                            prefixIconData: Icons.email,
+                            validator: emailValidator,
                           ),
-                        ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                            controller: _passwordController,
-                            obscureText: isObscure,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    isObscure = !isObscure;
-                                    setState(() {});
-                                  },
-                                  icon: Icon(isObscure
-                                      ? Icons.visibility_off
-                                      : Icons.visibility)),
-                              border: const OutlineInputBorder(),
-                              labelText: 'Password',
-                              prefixIcon: const Icon(Icons.lock),
-                            )),
-                        const SizedBox(height: 70),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                backgroundColor:
-                                    const Color.fromARGB(187, 238, 111, 27),
-                                foregroundColor: Colors.white,
-                                minimumSize: const Size(350, 50),
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontStyle: FontStyle.normal)),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                              controller: _passwordController,
+                              obscureText: isObscure,
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      isObscure = !isObscure;
+                                      setState(() {});
+                                    },
+                                    icon: Icon(isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility)),
+                                border: const OutlineInputBorder(),
+                                labelText: 'Password',
+                                prefixIcon: const Icon(Icons.lock),
+                              )),
+                          const SizedBox(height: 20),
+                          CustomButton(
+                            inverse: true,
+                            isLoading: state is LoginLoadingState,
+                            label: 'Login',
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
                                 BlocProvider.of<LoginBloc>(context).add(
@@ -157,8 +140,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                             },
-                            child: const Text('Login')),
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
