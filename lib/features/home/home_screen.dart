@@ -5,7 +5,6 @@ import 'package:dream_home_admin/features/dashboard/dashboard_screen.dart';
 import 'package:dream_home_admin/features/home/custom_drawer_item.dart';
 import 'package:dream_home_admin/features/home_plan_screen/homeplans_screen.dart';
 import 'package:dream_home_admin/features/login_screen/login_screen.dart';
-import 'package:dream_home_admin/features/order_screen/order_screen.dart';
 import 'package:dream_home_admin/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -115,17 +114,17 @@ class _HomeScreenState extends State<HomeScreen>
                         tabController.animateTo(4);
                       },
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomDrawerItem(
-                      isSelected: tabController.index == 5,
-                      title: 'Order Screen',
-                      icon: Icons.border_all,
-                      ontap: () {
-                        tabController.animateTo(5);
-                      },
-                    ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    // CustomDrawerItem(
+                    //   isSelected: tabController.index == 5,
+                    //   title: 'Order Screen',
+                    //   icon: Icons.border_all,
+                    //   ontap: () {
+                    //     tabController.animateTo(5);
+                    //   },
+                    // ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -173,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
                 CategoriesScreen(),
                 HomeplansScreen(),
-                OrderScreen(),
+                // OrderScreen(),
               ],
             ),
           ),

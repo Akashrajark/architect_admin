@@ -271,11 +271,117 @@ class _ArchitectScreenState extends State<ArchitectScreen> {
                                         backgroundColor: Colors.blue,
                                         label: 'View Details',
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ArchitectViewDetailScreen(),
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                CustomAlertDialog(
+                                              title: 'Architect Details',
+                                              content: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text('Name: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(formatValue(
+                                                          _architects[index]
+                                                              ['name'])),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Row(
+                                                    children: [
+                                                      Text('Email: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(formatValue(
+                                                          _architects[index]
+                                                              ['email'])),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Row(
+                                                    children: [
+                                                      Text('Status: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(formatValue(
+                                                          _architects[index]
+                                                              ['status'])),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Row(
+                                                    children: [
+                                                      Text('Phone: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(
+                                                          '+91 ${formatValue(_architects[index]['phone'])}'),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Row(
+                                                    children: [
+                                                      Text('License No: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Text(formatValue(
+                                                          _architects[index]
+                                                              ['license_no'])),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Column(
+                                                    children: [
+                                                      Text('License URL: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Image.network(
+                                                        formatValue(_architects[
+                                                                index]
+                                                            ['license_url']),
+                                                        height: 100,
+                                                        width: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 8),
+                                                  Column(
+                                                    children: [
+                                                      Text('Photo: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Image.network(
+                                                        formatValue(
+                                                            _architects[index]
+                                                                ['photo']),
+                                                        height: 100,
+                                                        width: 60,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              primaryButton: 'Close',
+                                              onPrimaryPressed: () {
+                                                Navigator.pop(context);
+                                              },
                                             ),
                                           );
                                         },

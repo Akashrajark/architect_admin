@@ -238,27 +238,27 @@ class ArchitectViewDetailScreen extends StatelessWidget {
                               ),
                             ),
                             DataCell(
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomePlanDetailScreen(
-                                          imageUrl:
-                                              'https://g.foolcdn.com/editorial/images/574911/new-home.jpg',
-                                          title: 'Sunset Detail View',
-                                          category: 'Modern Villa',
-                                          price: 9000,
-                                          architectName: 'Prakash',
-                                          architectImage:
-                                              'https://cdn.pixabay.com/photo/2023/05/27/08/04/ai-generated-8021008_1280.jpg',
-                                        ),
-                                      ));
-                                },
-                                child: const Text('View Plan'),
-                              ),
-                            ),
+                                // TextButton(
+                                //   onPressed: () {
+                                //     Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               HomePlanDetailScreen(
+                                //             imageUrl:
+                                //                 'https://g.foolcdn.com/editorial/images/574911/new-home.jpg',
+                                //             title: 'Sunset Detail View',
+                                //             category: 'Modern Villa',
+                                //             price: 9000,
+                                //             architectName: 'Prakash',
+                                //             architectImage:
+                                //                 'https://cdn.pixabay.com/photo/2023/05/27/08/04/ai-generated-8021008_1280.jpg',
+                                //           ),
+                                //         ));
+                                //   },
+                                //   child: const Text('View Plan'),
+                                // ),
+                                SizedBox()),
                           ],
                         ),
                       ],

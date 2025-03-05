@@ -1,182 +1,281 @@
+import 'package:dream_home_admin/common_widget/width_bound.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_home_admin/features/home_plan_screen/feature_card.dart';
 
-class HomePlanDetailScreen extends StatefulWidget {
-  final String imageUrl;
-  final String title;
-  final String category;
-  final double price;
-  final String architectName;
-  final String architectImage;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/web.dart';
+import '../../common_widget/custom_alert_dialog.dart';
+import '../../util/format_function.dart';
+import 'feature_card.dart';
+import 'homeplans_bloc/homeplans_bloc.dart';
 
-  const HomePlanDetailScreen({
+class HomePlanDetail extends StatefulWidget {
+  final bool owend;
+  final int homeplanId;
+  const HomePlanDetail({
     super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.category,
-    required this.price,
-    required this.architectName,
-    required this.architectImage,
-  });
+    required this.homeplanId,
+    required this.owend,
+  }); // Constructor with required parameter
 
   @override
-  _HomePlanDetailScreenState createState() => _HomePlanDetailScreenState();
+  State<HomePlanDetail> createState() => _HomePlanDetailState();
 }
 
-class _HomePlanDetailScreenState extends State<HomePlanDetailScreen> {
+class _HomePlanDetailState extends State<HomePlanDetail> {
+  final HomeplansBloc _homeplansBloc = HomeplansBloc();
+
+  Map _homeplan = {};
+  List _floors = [];
+
+  @override
+  void initState() {
+    getHomeplans();
+    super.initState();
+  }
+
+  void getHomeplans() {
+    _homeplansBloc.add(GetAllHomeplanByIdEvent(homeplanID: widget.homeplanId));
+  }
+
+  int getTotalBedrooms(List? properties) {
+    if (properties == null || properties.isEmpty) {
+      return 0; // Return 0 if the list is null or empty
+    }
+
+    return properties.fold(0, (sum, property) {
+      int bedrooms =
+          property['bedrooms'] ?? 0; // Default to 0 if 'bedrooms' is missing
+      return sum + bedrooms;
+    });
+  }
+
+  int getTotalBathroom(List? properties) {
+    if (properties == null || properties.isEmpty) {
+      return 0; // Return 0 if the list is null or empty
+    }
+
+    return properties.fold(0, (sum, property) {
+      int bedrooms =
+          property['bathrooms'] ?? 0; // Default to 0 if 'bedrooms' is missing
+      return sum + bedrooms;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+      body: BlocProvider.value(
+        value: _homeplansBloc,
+        child: BlocConsumer<HomeplansBloc, HomeplansState>(
+          listener: (context, state) {
+            if (state is HomeplansFailureState) {
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  title: 'Failure',
+                  description: state.message,
+                  primaryButton: 'Try Again',
+                  onPrimaryPressed: () {
+                    getHomeplans();
+
+                    Navigator.pop(context);
+                  },
+                ),
+              );
+            } else if (state is HomeplansGetByIdSuccessState) {
+              _homeplan = state.homeplan;
+              _floors = _homeplan['floors'];
+              Logger().w(_homeplan);
+              setState(() {});
+            } else if (state is HomeplansSuccessState) {
+              getHomeplans();
+            }
+          },
+          builder: (context, state) {
+            if (state is HomeplansLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is HomeplansGetSuccessState && _homeplan.isEmpty) {
+              return Center(
+                child: Text("No Homeplan found!"),
+              );
+            }
+            return WidthBound(
+              width: 1000,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        if (_homeplan['image_url'] != null)
+                          Image.network(
+                            _homeplan['image_url'],
+                            fit: BoxFit.cover,
+                            height: 400,
+                            width: double.infinity,
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, top: 40),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: CircleAvatar(
+                              radius: 15,
+                              child: Icon(Icons.chevron_left),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            formatValue(_homeplan['name']),
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            spacing: 10,
+                            children: [
+                              FeatureCard(
+                                text: "${getTotalBedrooms(_floors)} Bed",
+                                icon: Icons.bed,
+                              ),
+                              FeatureCard(
+                                icon: Icons.bathtub,
+                                text: "${getTotalBathroom(_floors)} Bath",
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: CircleAvatar(
+                              backgroundImage:
+                                  _homeplan['architect']?['photo'] != null
+                                      ? NetworkImage(
+                                          _homeplan['architect']?['photo'])
+                                      : null,
+                            ),
+                            title: Text(
+                                formatValue(_homeplan['architect']?['name'])),
+                            subtitle: Text(
+                                formatValue(_homeplan['architect']?['email'])),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Description',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            formatValue(_homeplan['description']),
+                            style: TextStyle(fontSize: 14.0),
+                          ),
+                          const SizedBox(height: 20),
+                          ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(bottom: 100),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => FloorCard(
+                              floorDetails: _floors[index],
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(
+                              height: 30,
+                            ),
+                            itemCount: _floors.length,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
+      bottomSheet: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+        ),
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image Section
-                Expanded(
-                  flex: 2,
-                  child: Image.network(
-                    widget.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                // Details Section
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        "Category: ${widget.category}",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        "Price: \\${widget.price}",
-                        style: TextStyle(fontSize: 18, color: Colors.green),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(widget.architectImage),
-                            radius: 30,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            widget.architectName,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Features",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FeatureCard(
-                            text: "4 Beds",
-                            icon: Icons.bed,
-                          ),
-                          FeatureCard(
-                            icon: Icons.bathtub,
-                            text: "2 Bath",
-                          ),
-                          FeatureCard(
-                            icon: Icons.directions_car,
-                            text: "1 Parking",
-                          ),
-                        ],
-                      ),
-                      Text(
-                        "Description",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-
-            // Ground Floor and Rooms Information
             Text(
-              "Ground Floor & Rooms",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              '₹${formatInteger(_homeplan['price'])}',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green),
             ),
-            const SizedBox(height: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "• Living Room",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  "• Dining Room",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  "• Kitchen",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  "• 2 Bedrooms",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  "• 1 Bathroom",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-
-            Text(
-              "Detailed Image",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: Image.network(
-                'https://gillaniarchitects.weebly.com/uploads/1/2/7/4/12747279/8845232_orig.jpg',
-                fit: BoxFit.cover,
-              ),
-            )
           ],
         ),
       ),
+    );
+  }
+}
+
+class FloorCard extends StatelessWidget {
+  final Map<String, dynamic> floorDetails;
+  const FloorCard({
+    super.key,
+    required this.floorDetails,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          formatValue(floorDetails['name']).toUpperCase(),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          spacing: 10,
+          children: [
+            FeatureCard(
+              text: "${formatValue(floorDetails['bedrooms'])} Bed",
+              icon: Icons.bed,
+            ),
+            FeatureCard(
+              icon: Icons.bathtub,
+              text: "${formatValue(floorDetails['bathrooms'])} Bath",
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(
+          formatValue(floorDetails['description']),
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Image',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        if (floorDetails['image_url'] != null)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.network(
+              floorDetails['image_url'],
+              fit: BoxFit.cover,
+            ),
+          ),
+      ],
     );
   }
 }

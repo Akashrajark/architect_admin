@@ -1,5 +1,7 @@
 import 'package:dream_home_admin/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dashboard_bloc/dashboard_bloc.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({
@@ -8,95 +10,61 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Wrap(
-            alignment: WrapAlignment.start,
-            runAlignment: WrapAlignment.start,
-            runSpacing: 20,
-            spacing: 20,
-            children: [
-              DasboardCard(
-                label: 'Total Architect',
-                iconbgcolor: Colors.blue,
-                value: '565',
-                icon: Icons.architecture,
-              ),
-              DasboardCard(
-                label: 'Total Category',
-                iconbgcolor: Colors.green,
-                value: '565',
-                icon: Icons.category_outlined,
-              ),
-              DasboardCard(
-                label: 'Total Homeplane',
-                iconbgcolor: Colors.purple,
-                value: '565',
-                icon: Icons.foundation,
-              ),
-              DasboardCard(
-                label: 'Total Purchase',
-                iconbgcolor: Colors.orange,
-                value: '565',
-                icon: Icons.attach_money,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: (Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(16)),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Growth Overview',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Chart placeholder-Growth metrics will be displayed here',
-                          style: TextStyle(color: Colors.grey[600]),
-                          textAlign: TextAlign.center,
-                        )
-                      ]),
-                )),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(16)),
-                  padding: const EdgeInsets.all(16),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocProvider(
+      create: (context) => DashboardBloc()..add(GetDashboardDataEvent()),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BlocBuilder<DashboardBloc, DashboardState>(
+              builder: (context, state) {
+                if (state is DashboardLoadingState) {
+                  return CircularProgressIndicator();
+                } else if (state is DashboardSuccessState) {
+                  return Wrap(
+                    alignment: WrapAlignment.start,
+                    runAlignment: WrapAlignment.start,
+                    runSpacing: 20,
+                    spacing: 20,
                     children: [
-                      Text(
-                        'Recent Activity',
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                      DasboardCard(
+                        label: 'Total Architect',
+                        iconbgcolor: Colors.blue,
+                        value: state.data['total_architects'].toString(),
+                        icon: Icons.architecture,
                       ),
-                      SizedBox(height: 8),
+                      DasboardCard(
+                        label: 'Total Category',
+                        iconbgcolor: Colors.green,
+                        value: state.data['total_categories'].toString(),
+                        icon: Icons.category_outlined,
+                      ),
+                      DasboardCard(
+                        label: 'Total Homeplane',
+                        iconbgcolor: Colors.purple,
+                        value: state.data['total_homeplans'].toString(),
+                        icon: Icons.foundation,
+                      ),
+                      DasboardCard(
+                        label: 'Total Users',
+                        iconbgcolor: Colors.orange,
+                        value: state.data['total_users'].toString(),
+                        icon: Icons.attach_money,
+                      ),
                     ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ],
+                  );
+                } else if (state is DashboardFailureState) {
+                  return Text('Failed to load data');
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

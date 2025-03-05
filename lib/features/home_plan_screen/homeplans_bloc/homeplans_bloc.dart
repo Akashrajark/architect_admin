@@ -25,8 +25,10 @@ class HomeplansBloc extends Bloc<HomeplansEvent, HomeplansState> {
 
           emit(HomeplansGetSuccessState(homeplans: homeplans));
         } else if (event is GetAllHomeplanByIdEvent) {
-          PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
-              table.select('*').eq('id', event.homeplanID);
+          PostgrestFilterBuilder<List<Map<String, dynamic>>> query = table
+              .select(
+                  '*,floors:floor_plans(*),category:categories(*),architect:architects(*)')
+              .eq('id', event.homeplanID);
 
           Map<String, dynamic> homeplan =
               await query.order('name', ascending: true).single();

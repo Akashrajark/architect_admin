@@ -1,43 +1,21 @@
 import 'package:flutter/material.dart';
 
 class OrderViewScreen extends StatefulWidget {
-  OrderViewScreen({super.key});
+  final Map order;
+
+  OrderViewScreen({super.key, required this.order});
 
   @override
   State<OrderViewScreen> createState() => _OrderViewScreenState();
 }
 
 class _OrderViewScreenState extends State<OrderViewScreen> {
-  final Map<String, dynamic> order = {
-    "orderId": "#001",
-    "date": "2025-02-17",
-    "userName": "John Doe",
-    "architectName": "Jane Smith",
-    "category": "Modern",
-    "planName": "Luxury Villa",
-    "totalPrice": 5000,
-    "profit": 800,
-    "details": "A luxurious 4BHK villa with modern amenities.",
-    "homePlanImages": [
-      "https://images.pexels.com/photos/3555615/pexels-photo-3555615.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-      'https://cdn.wallpapersafari.com/26/41/LxkWAM.jpg',
-      'https://e1.pxfuel.com/desktop-wallpaper/498/602/desktop-wallpaper-most-beautiful-home-designs-house-plans-in-the-small-homes-small-house.jpg'
-    ],
-    "userImage":
-        "https://static.vecteezy.com/system/resources/previews/007/638/325/original/head-of-eagle-illustration-design-vector.jpg",
-    "architectImage":
-        "https://cdn.pixabay.com/photo/2016/08/28/13/31/basic-1625962_640.png",
-    "features": {
-      "bedrooms": 4,
-      "bathrooms": 3,
-      "parking": true,
-    }
-  };
-
   int currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final order = widget.order;
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
