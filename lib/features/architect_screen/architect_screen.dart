@@ -1,6 +1,5 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:dream_home_admin/common_widget/custom_search.dart';
-import 'package:dream_home_admin/features/architect_screen/architect_view_detail_screen.dart';
 import 'package:dream_home_admin/theme/app_theme.dart';
 import 'package:dream_home_admin/util/format_function.dart';
 import 'package:flutter/material.dart';
