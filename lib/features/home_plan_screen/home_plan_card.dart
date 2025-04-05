@@ -67,8 +67,9 @@ class HomePlanCard extends StatelessWidget {
                                 color: Colors.green),
                           ),
                           SizedBox(height: 8),
-                          Row(
+                          Wrap(
                             spacing: 10,
+                            runSpacing: 10,
                             children: [
                               if (cardData['total_bedrooms'] != 0)
                                 FeatureCard(
@@ -82,6 +83,27 @@ class HomePlanCard extends StatelessWidget {
                                   text:
                                       '${formatInteger(cardData['total_bathrooms'])} Bath',
                                 ),
+                              FeatureCard(
+                                icon: Icons.straighten, // represents length
+                                text:
+                                    "${formatValue(cardData['plot_length'])} m Length",
+                              ),
+                              FeatureCard(
+                                icon:
+                                    Icons.straighten, // can use same for width
+                                text:
+                                    "${formatValue(cardData['plot_width'])} m Width",
+                              ),
+                              FeatureCard(
+                                icon: Icons.square_foot,
+                                text:
+                                    "${formatValue(cardData['plot_area'])} m² Area",
+                              ),
+                              FeatureCard(
+                                icon: Icons.directions, // road facing
+                                text:
+                                    "${formatValue(cardData['road_facing'])} Facing",
+                              ),
                             ],
                           ),
                         ],

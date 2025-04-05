@@ -64,6 +64,7 @@ class _HomePlanDetailState extends State<HomePlanDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocProvider.value(
         value: _homeplansBloc,
         child: BlocConsumer<HomeplansBloc, HomeplansState>(
@@ -104,6 +105,7 @@ class _HomePlanDetailState extends State<HomePlanDetail> {
             }
             return WidthBound(
               width: 1000,
+              backgroundColor: Colors.white,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -170,6 +172,39 @@ class _HomePlanDetailState extends State<HomePlanDetail> {
                             subtitle: Text(
                                 formatValue(_homeplan['architect']?['email'])),
                           ),
+                          const SizedBox(height: 20),
+                          Text(
+                            'Plot Details',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            spacing: 10,
+                            children: [
+                              FeatureCard(
+                                icon: Icons.straighten, // represents length
+                                text:
+                                    "${formatValue(_homeplan['plot_length'])} m Length",
+                              ),
+                              FeatureCard(
+                                icon:
+                                    Icons.straighten, // can use same for width
+                                text:
+                                    "${formatValue(_homeplan['plot_width'])} m Width",
+                              ),
+                              FeatureCard(
+                                icon: Icons.square_foot,
+                                text:
+                                    "${formatValue(_homeplan['plot_area'])} m² Area",
+                              ),
+                              FeatureCard(
+                                icon: Icons.directions, // road facing
+                                text:
+                                    "${formatValue(_homeplan['road_facing'])} Facing",
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 10),
                           Text(
                             'Description',
@@ -206,14 +241,26 @@ class _HomePlanDetailState extends State<HomePlanDetail> {
       ),
       bottomSheet: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(50),
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
         padding: EdgeInsets.all(16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '₹${formatInteger(_homeplan['price'])}',
+              'Price ₹${formatInteger(_homeplan['price'])}',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

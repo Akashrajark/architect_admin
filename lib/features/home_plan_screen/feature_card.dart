@@ -14,6 +14,7 @@ class FeatureCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 20, color: Colors.black54),
             SizedBox(width: 4),

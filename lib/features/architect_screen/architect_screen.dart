@@ -148,15 +148,19 @@ class _ArchitectScreenState extends State<ArchitectScreen> {
                           //   },
                           // ),
                           columns: [
-                            DataColumn(label: Text('Name')),
-                            DataColumn(label: Text('Email')),
-                            DataColumn(label: Text('Phone')),
-                            DataColumn(label: Text('License no')),
+                            DataColumn2(
+                                label: Text('Name'), size: ColumnSize.L),
+                            DataColumn2(
+                                label: Text('Email'), size: ColumnSize.L),
+                            DataColumn2(
+                                label: Text('Phone'), size: ColumnSize.M),
+                            DataColumn2(
+                                label: Text('License no'), size: ColumnSize.M),
                             DataColumn2(
                               label: Align(
                                   alignment: Alignment.centerRight,
                                   child: Text('Actions')),
-                              fixedWidth: 370,
+                              fixedWidth: widget.isPending ? 370 : 170,
                             ),
                             // if (widget.isPending)
                             //   DataColumn(label: Text('Decision')),
