@@ -53,7 +53,7 @@ class HomePlanCard extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: 5),
                           Text(
                             formatValue(cardData['description']),
                             style: TextStyle(fontSize: 14, color: Colors.grey),
