@@ -16,12 +16,11 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void initState() {
-    tabController = TabController(length: 6, vsync: this, initialIndex: 0);
+    tabController = TabController(length: 5, vsync: this, initialIndex: 0);
     tabController.addListener(() {
       setState(() {});
     });
